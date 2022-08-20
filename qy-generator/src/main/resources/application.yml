@@ -1,0 +1,22 @@
+server:
+  port: 8088
+
+spring:
+  profiles:
+    active: dev
+
+# 需要指定对应的模板
+fast:
+  template: fast-boot
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  typeAliasesPackage: com.qinye.generator.entity
+  global-config:
+    db-config:
+      id-type: AUTO
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true

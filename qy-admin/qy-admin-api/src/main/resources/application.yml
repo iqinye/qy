@@ -1,0 +1,137 @@
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 8009
+  servlet:
+    # 应用的访问路径
+    context-path: /admin
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+# Spring配置
+spring:
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+  # 运行环境
+  profiles:
+    active: dev,security
+  # 文件上传
+  servlet:
+    multipart:
+      # 单个文件大小
+      max-file-size:  10MB
+      # 设置总上传的文件大小
+      max-request-size:  20MB
+  # 服务模块
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+  mvc: #静态文件
+    static-path-pattern: /static/**
+  #模板引擎
+  thymeleaf:
+    model: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+    #指定编码
+    encoding: utf-8
+    #禁用缓存 默认false
+    cache: false
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+# 项目相关配置
+qy:
+  # 名称
+  name: qy-admin
+  # 版本
+  version: 1.0.0
+  # 版权年份
+  copyrightYear: 2022
+  # 实例演示开关
+  demoEnabled: true
+  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  profile: /opt/project/qy-admin/uploadPath
+  # 获取ip地址开关
+  addressEnabled: false
+  # 验证码类型 math 数组计算 char 字符验证
+  captchaType: math
+
+
+# 需要指定对应的代码器模板
+fast:
+  template: fast-boot
+
+
+
+# 日志配置
+logging:
+  level:
+    com.qinye: debug
+    org.springframework: warn
+
+# token配置
+token:
+    # 令牌自定义标识
+    header: Authorization
+    # 令牌密钥
+    secret: abcdefghijklmnopqrstuvwxyz
+    # 令牌有效期（默认30分钟）
+    expireTime: 30
+
+# MyBatis配置
+mybatis:
+#    # 搜索指定包别名
+#    typeAliasesPackage: com.iyongye.**.domain
+    # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+    # 加载全局的配置文件
+#    configLocation: classpath:mybatis/mybatis-config.xml
+
+# MyBatis Plus 的配置项
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true # 虽然默认为 true ，但是还是显示去指定下。
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印日志
+  global-config:
+    db-config:
+      id-type: INPUT # 自增 ID
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  typeAliasesPackage: com.qinye.**.domain
+
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+  title: qy-admin服务端接口
+  version: 1.0.0
+  serverUrl: http://localhost:8009/doc.html
+  # 请求前缀
+  pathMapping: /admin
+
+# 防止XSS攻击
+#xss:
+#  # 过滤开关
+#  enabled: true
+#  # 排除链接（多个用逗号分隔）
+#  excludes: /system/notice
+#  # 匹配链接
+#  urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 七牛云相关配置
+qiniu:
+  accessKey: Jarz72OorXQC8XTpWiwE0qF7oEPTeSK2-1drfRpc  # 公钥
+  secretKey: VD_nuo2wKWndP1H9aSHsvpTDS00NQwlYD0pCYSKu  # 私钥
+  bucketName: qinye-portal  #存储空间名称
+  path: http://image-qinye-portal.iqinye.com
+
