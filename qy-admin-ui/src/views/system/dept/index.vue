@@ -226,8 +226,8 @@ export default {
     /** 查询部门列表 */
     getList() {
       this.loading = true;
-      listDept(this.queryParams).then(response => {
-        this.deptList = this.handleTree(response.data, "deptId");
+      listDept(this.queryParams).then(r => {
+        this.deptList = this.handleTree(r.data, "deptId");
         this.loading = false;
       });
     },
@@ -278,8 +278,8 @@ export default {
       }
       this.open = true;
       this.title = "添加部门";
-      listDept().then(response => {
-        this.deptOptions = this.handleTree(response.data, "deptId");
+      listDept().then(r => {
+        this.deptOptions = this.handleTree(r.data, "deptId");
       });
     },
     /** 展开/折叠操作 */
@@ -293,13 +293,13 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      getDept(row.deptId).then(response => {
-        this.form = response.data;
+      getDept(row.deptId).then(r => {
+        this.form = r.data;
         this.open = true;
         this.title = "修改部门";
       });
-      listDeptExcludeChild(row.deptId).then(response => {
-        this.deptOptions = this.handleTree(response.data, "deptId");
+      listDeptExcludeChild(row.deptId).then(r => {
+        this.deptOptions = this.handleTree(r.data, "deptId");
       });
     },
     /** 提交按钮 */
@@ -307,13 +307,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.deptId != undefined) {
-            updateDept(this.form).then(response => {
+            updateDept(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addDept(this.form).then(response => {
+            addDept(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

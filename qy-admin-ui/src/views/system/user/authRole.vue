@@ -70,9 +70,9 @@ export default {
     const userId = this.$route.params && this.$route.params.userId;
     if (userId) {
       this.loading = true;
-      getAuthRole(userId).then((response) => {
-        this.form = response.data.user;
-        this.roles = response.data.roles;
+      getAuthRole(userId).then((r) => {
+        this.form = r.data.user;
+        this.roles = r.data.roles;
         this.total = this.roles.length;
         this.$nextTick(() => {
           this.roles.forEach((row) => {
@@ -102,7 +102,7 @@ export default {
     submitForm() {
       const userId = this.form.userId;
       const roleIds = this.roleIds.join(",");
-      updateAuthRole({ userId: userId, roleIds: roleIds }).then((response) => {
+      updateAuthRole({ userId: userId, roleIds: roleIds }).then((r) => {
         this.$modal.msgSuccess("授权成功");
         this.close();
       });

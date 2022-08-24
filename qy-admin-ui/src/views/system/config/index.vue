@@ -239,9 +239,9 @@ export default {
     /** 查询参数列表 */
     getList() {
       this.loading = true;
-      listConfig(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.configList = response.rows;
-          this.total = response.total;
+      listConfig(this.addDateRange(this.queryParams, this.dateRange)).then(r => {
+          this.configList = r.rows;
+          this.total = r.total;
           this.loading = false;
         }
       );
@@ -290,8 +290,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       const configId = row.configId || this.ids
-      getConfig(configId).then(response => {
-        this.form = response.data;
+      getConfig(configId).then(r => {
+        this.form = r.data;
         this.open = true;
         this.title = "修改参数";
       });
@@ -301,13 +301,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.configId != undefined) {
-            updateConfig(this.form).then(response => {
+            updateConfig(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addConfig(this.form).then(response => {
+            addConfig(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

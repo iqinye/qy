@@ -80,10 +80,10 @@ export default {
   },
   methods: {
     getUser() {
-      getUserProfile().then(response => {
-        this.user = response.data.user;
-        this.roleGroup = response.data.roleGroup;
-        this.postGroup = response.data.postGroup;
+      getUserProfile().then(r => {
+        this.user = r.data.user;
+        this.roleGroup = r.data.roleGroup;
+        this.postGroup = r.data.postGroup;
       });
     }
   }

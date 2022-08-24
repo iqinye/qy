@@ -243,9 +243,9 @@ export default {
     /** 查询字典类型列表 */
     getList() {
       this.loading = true;
-      listType(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.typeList = response.rows;
-          this.total = response.total;
+      listType(this.addDateRange(this.queryParams, this.dateRange)).then(r => {
+          this.typeList = r.rows;
+          this.total = r.total;
           this.loading = false;
         }
       );
@@ -293,8 +293,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       const dictId = row.dictId || this.ids
-      getType(dictId).then(response => {
-        this.form = response.data;
+      getType(dictId).then(r => {
+        this.form = r.data;
         this.open = true;
         this.title = "修改字典类型";
       });
@@ -304,13 +304,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.dictId != undefined) {
-            updateType(this.form).then(response => {
+            updateType(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addType(this.form).then(response => {
+            addType(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

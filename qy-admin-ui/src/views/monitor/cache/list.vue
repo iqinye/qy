@@ -174,8 +174,8 @@ export default {
     /** 查询缓存名称列表 */
     getCacheNames() {
       this.loading = true;
-      listCacheName().then(response => {
-        this.cacheNames = response.data;
+      listCacheName().then(r => {
+        this.cacheNames = r.data;
         this.loading = false;
       });
     },
@@ -186,7 +186,7 @@ export default {
     },
     /** 清理指定名称缓存 */
     handleClearCacheName(row) {
-      clearCacheName(row.cacheName).then(response => {
+      clearCacheName(row.cacheName).then(r => {
         this.$modal.msgSuccess("清理缓存名称[" + this.nowCacheName + "]成功");
         this.getCacheKeys();
       });
@@ -198,8 +198,8 @@ export default {
         return;
       }
       this.subLoading = true;
-      listCacheKey(cacheName).then(response => {
-        this.cacheKeys = response.data;
+      listCacheKey(cacheName).then(r => {
+        this.cacheKeys = r.data;
         this.subLoading = false;
         this.nowCacheName = cacheName;
       });
@@ -211,7 +211,7 @@ export default {
     },
     /** 清理指定键名缓存 */
     handleClearCacheKey(cacheKey) {
-      clearCacheKey(cacheKey).then(response => {
+      clearCacheKey(cacheKey).then(r => {
         this.$modal.msgSuccess("清理缓存键名[" + cacheKey + "]成功");
         this.getCacheKeys();
       });
@@ -226,13 +226,13 @@ export default {
     },
     /** 查询缓存内容详细 */
     handleCacheValue(cacheKey) {
-      getCacheValue(this.nowCacheName, cacheKey).then(response => {
-        this.cacheForm = response.data;
+      getCacheValue(this.nowCacheName, cacheKey).then(r => {
+        this.cacheForm = r.data;
       });
     },
     /** 清理全部缓存 */
     handleClearCacheAll() {
-      clearCacheAll().then(response => {
+      clearCacheAll().then(r => {
         this.$modal.msgSuccess("清理全部缓存成功");
       });
     }

@@ -279,24 +279,24 @@ export default {
   methods: {
     /** 查询字典类型详细 */
     getType(dictId) {
-      getType(dictId).then(response => {
-        this.queryParams.dictType = response.data.dictType;
-        this.defaultDictType = response.data.dictType;
+      getType(dictId).then(r => {
+        this.queryParams.dictType = r.data.dictType;
+        this.defaultDictType = r.data.dictType;
         this.getList();
       });
     },
     /** 查询字典类型列表 */
     getTypeList() {
-      getDictOptionselect().then(response => {
-        this.typeOptions = response.data;
+      getDictOptionselect().then(r => {
+        this.typeOptions = r.data;
       });
     },
     /** 查询字典数据列表 */
     getList() {
       this.loading = true;
-      listData(this.queryParams).then(response => {
-        this.dataList = response.rows;
-        this.total = response.total;
+      listData(this.queryParams).then(r => {
+        this.dataList = r.rows;
+        this.total = r.total;
         this.loading = false;
       });
     },
@@ -352,8 +352,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       const dictCode = row.dictCode || this.ids
-      getData(dictCode).then(response => {
-        this.form = response.data;
+      getData(dictCode).then(r => {
+        this.form = r.data;
         this.open = true;
         this.title = "修改字典数据";
       });
@@ -363,14 +363,14 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.dictCode != undefined) {
-            updateData(this.form).then(response => {
+            updateData(this.form).then(r => {
               this.$store.dispatch('dict/removeDict', this.queryParams.dictType);
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addData(this.form).then(response => {
+            addData(this.form).then(r => {
               this.$store.dispatch('dict/removeDict', this.queryParams.dictType);
               this.$modal.msgSuccess("新增成功");
               this.open = false;

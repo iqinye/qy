@@ -142,9 +142,9 @@ export default {
     /** 查询授权用户列表 */
     getList() {
       this.loading = true;
-      allocatedUserList(this.queryParams).then(response => {
-          this.userList = response.rows;
-          this.total = response.total;
+      allocatedUserList(this.queryParams).then(r => {
+          this.userList = r.rows;
+          this.total = r.total;
           this.loading = false;
         }
       );

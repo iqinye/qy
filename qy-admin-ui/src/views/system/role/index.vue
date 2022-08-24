@@ -351,23 +351,23 @@ export default {
     /** 查询角色列表 */
     getList() {
       this.loading = true;
-      listRole(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.roleList = response.rows;
-          this.total = response.total;
+      listRole(this.addDateRange(this.queryParams, this.dateRange)).then(r => {
+          this.roleList = r.rows;
+          this.total = r.total;
           this.loading = false;
         }
       );
     },
     /** 查询菜单树结构 */
     getMenuTreeselect() {
-      menuTreeselect().then(response => {
-        this.menuOptions = response.data;
+      menuTreeselect().then(r => {
+        this.menuOptions = r.data;
       });
     },
     /** 查询部门树结构 */
     getDeptTreeselect() {
-      deptTreeselect().then(response => {
-        this.deptOptions = response.data;
+      deptTreeselect().then(r => {
+        this.deptOptions = r.data;
       });
     },
     // 所有菜单节点数据
@@ -390,16 +390,16 @@ export default {
     },
     /** 根据角色ID查询菜单树结构 */
     getRoleMenuTreeselect(roleId) {
-      return roleMenuTreeselect(roleId).then(response => {
-        this.menuOptions = response.data.menus;
-        return response;
+      return roleMenuTreeselect(roleId).then(r => {
+        this.menuOptions = r.data.menus;
+        return r;
       });
     },
     /** 根据角色ID查询部门树结构 */
     getRoleDeptTreeselect(roleId) {
-      return roleDeptTreeselect(roleId).then(response => {
-        this.deptOptions = response.data.depts;
-        return response;
+      return roleDeptTreeselect(roleId).then(r => {
+        this.deptOptions = r.data.depts;
+        return r;
       });
     },
     // 角色状态修改
@@ -518,8 +518,8 @@ export default {
       this.reset();
       const roleId = row.roleId || this.ids
       const roleMenu = this.getRoleMenuTreeselect(roleId);
-      getRole(roleId).then(response => {
-        this.form = response.data;
+      getRole(roleId).then(r => {
+        this.form = r.data;
         this.open = true;
         this.$nextTick(() => {
           roleMenu.then(res => {
@@ -544,8 +544,8 @@ export default {
     handleDataScope(row) {
       this.reset();
       const roleDeptTreeselect = this.getRoleDeptTreeselect(row.roleId);
-      getRole(row.roleId).then(response => {
-        this.form = response.data;
+      getRole(row.roleId).then(r => {
+        this.form = r.data;
         this.openDataScope = true;
         this.$nextTick(() => {
           roleDeptTreeselect.then(res => {
@@ -566,14 +566,14 @@ export default {
         if (valid) {
           if (this.form.roleId != undefined) {
             this.form.menuIds = this.getMenuAllCheckedKeys();
-            updateRole(this.form).then(response => {
+            updateRole(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
             this.form.menuIds = this.getMenuAllCheckedKeys();
-            addRole(this.form).then(response => {
+            addRole(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -586,7 +586,7 @@ export default {
     submitDataScope: function() {
       if (this.form.roleId != undefined) {
         this.form.deptIds = this.getDeptAllCheckedKeys();
-        dataScope(this.form).then(response => {
+        dataScope(this.form).then(r => {
           this.$modal.msgSuccess("修改成功");
           this.openDataScope = false;
           this.getList();

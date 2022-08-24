@@ -334,8 +334,8 @@ export default {
     /** 查询菜单列表 */
     getList() {
       this.loading = true;
-      listMenu(this.queryParams).then(response => {
-        this.menuList = this.handleTree(response.data, "menuId");
+      listMenu(this.queryParams).then(r => {
+        this.menuList = this.handleTree(r.data, "menuId");
         this.loading = false;
       });
     },
@@ -352,10 +352,10 @@ export default {
     },
     /** 查询菜单下拉树结构 */
     getTreeselect() {
-      listMenu().then(response => {
+      listMenu().then(r => {
         this.menuOptions = [];
         const menu = { menuId: 0, menuName: '主类目', children: [] };
-        menu.children = this.handleTree(response.data, "menuId");
+        menu.children = this.handleTree(r.data, "menuId");
         this.menuOptions.push(menu);
       });
     },
@@ -413,8 +413,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.getTreeselect();
-      getMenu(row.menuId).then(response => {
-        this.form = response.data;
+      getMenu(row.menuId).then(r => {
+        this.form = r.data;
         this.open = true;
         this.title = "修改菜单";
       });
@@ -424,13 +424,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.menuId != undefined) {
-            updateMenu(this.form).then(response => {
+            updateMenu(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addMenu(this.form).then(response => {
+            addMenu(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

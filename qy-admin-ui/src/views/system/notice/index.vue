@@ -223,9 +223,9 @@ export default {
     /** 查询公告列表 */
     getList() {
       this.loading = true;
-      listNotice(this.queryParams).then(response => {
-        this.noticeList = response.rows;
-        this.total = response.total;
+      listNotice(this.queryParams).then(r => {
+        this.noticeList = r.rows;
+        this.total = r.total;
         this.loading = false;
       });
     },
@@ -271,8 +271,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       const noticeId = row.noticeId || this.ids
-      getNotice(noticeId).then(response => {
-        this.form = response.data;
+      getNotice(noticeId).then(r => {
+        this.form = r.data;
         this.open = true;
         this.title = "修改公告";
       });
@@ -282,13 +282,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.noticeId != undefined) {
-            updateNotice(this.form).then(response => {
+            updateNotice(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addNotice(this.form).then(response => {
+            addNotice(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

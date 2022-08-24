@@ -255,12 +255,12 @@ export default {
         this.queryParams.params["beginCreateTime"] = this.daterangeCreateTime[0];
         this.queryParams.params["endCreateTime"] = this.daterangeCreateTime[1];
       }
-      this.getConfigKey("sys.oss.previewListResource").then(response => {
-        this.previewListResource = response.msg === undefined ? true : response.msg === 'true';
+      this.getConfigKey("sys.oss.previewListResource").then(r => {
+        this.previewListResource = r.msg === undefined ? true : r.msg === 'true';
       });
-      listOss(this.queryParams).then(response => {
-        this.ossList = response.rows;
-        this.total = response.total;
+      listOss(this.queryParams).then(r => {
+        this.ossList = r.rows;
+        this.total = r.total;
         this.loading = false;
       });
     },

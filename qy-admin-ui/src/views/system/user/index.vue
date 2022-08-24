@@ -463,25 +463,25 @@ export default {
   created() {
     this.getList();
     this.getTreeselect();
-    this.getConfigKey("sys.user.initPassword").then(response => {
-      this.initPassword = response.msg;
+    this.getConfigKey("sys.user.initPassword").then(r => {
+      this.initPassword = r.msg;
     });
   },
   methods: {
     /** 查询用户列表 */
     getList() {
       this.loading = true;
-      listUser(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.userList = response.rows;
-          this.total = response.total;
+      listUser(this.addDateRange(this.queryParams, this.dateRange)).then(r => {
+          this.userList = r.rows;
+          this.total = r.total;
           this.loading = false;
         }
       );
     },
     /** 查询部门下拉树结构 */
     getTreeselect() {
-      treeselect().then(response => {
-        this.deptOptions = response.data;
+      treeselect().then(r => {
+        this.deptOptions = r.data;
       });
     },
     // 筛选节点
@@ -562,9 +562,9 @@ export default {
     handleAdd() {
       this.reset();
       this.getTreeselect();
-      getUser().then(response => {
-        this.postOptions = response.data.posts;
-        this.roleOptions = response.data.roles;
+      getUser().then(r => {
+        this.postOptions = r.data.posts;
+        this.roleOptions = r.data.roles;
         this.open = true;
         this.title = "添加用户";
         this.form.password = this.initPassword;
@@ -575,12 +575,12 @@ export default {
       this.reset();
       this.getTreeselect();
       const userId = row.userId || this.ids;
-      getUser(userId).then(response => {
-        this.form = response.data.user;
-        this.postOptions = response.data.posts;
-        this.roleOptions = response.data.roles;
-        this.form.postIds = response.data.postIds;
-        this.form.roleIds = response.data.roleIds;
+      getUser(userId).then(r => {
+        this.form = r.data.user;
+        this.postOptions = r.data.posts;
+        this.roleOptions = r.data.roles;
+        this.form.postIds = r.data.postIds;
+        this.form.roleIds = r.data.roleIds;
         this.open = true;
         this.title = "修改用户";
         this.form.password = "";
@@ -595,7 +595,7 @@ export default {
         inputPattern: /^.{5,20}$/,
         inputErrorMessage: "用户密码长度必须介于 5 和 20 之间"
       }).then(({ value }) => {
-          resetUserPwd(row.userId, value).then(response => {
+          resetUserPwd(row.userId, value).then(r => {
             this.$modal.msgSuccess("修改成功，新密码是：" + value);
           });
         }).catch(() => {});
@@ -610,13 +610,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.userId != undefined) {
-            updateUser(this.form).then(response => {
+            updateUser(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addUser(this.form).then(response => {
+            addUser(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -656,11 +656,11 @@ export default {
       this.upload.isUploading = true;
     },
     // 文件上传成功处理
-    handleFileSuccess(response, file, fileList) {
+    handleFileSuccess(r, file, fileList) {
       this.upload.open = false;
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
-      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
+      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + r.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
       this.getList();
     },
     // 提交上传文件

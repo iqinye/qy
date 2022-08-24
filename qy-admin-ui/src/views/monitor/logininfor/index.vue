@@ -173,9 +173,9 @@ export default {
     /** 查询登录日志列表 */
     getList() {
       this.loading = true;
-      list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-          this.list = response.rows;
-          this.total = response.total;
+      list(this.addDateRange(this.queryParams, this.dateRange)).then(r => {
+          this.list = r.rows;
+          this.total = r.total;
           this.loading = false;
         }
       );

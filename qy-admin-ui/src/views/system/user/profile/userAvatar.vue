@@ -127,9 +127,9 @@ export default {
         let formData = new FormData();
         console.log(this.options.filename)
         formData.append("avatarfile", data, this.options.filename);
-        uploadAvatar(formData).then(response => {
+        uploadAvatar(formData).then(r => {
           this.open = false;
-          this.options.img = response.data.imgUrl;
+          this.options.img = r.data.imgUrl;
           store.commit('SET_AVATAR', this.options.img);
           this.$modal.msgSuccess("修改成功");
           this.visible = false;

@@ -269,9 +269,9 @@ export default {
     /** 查询对象存储配置列表 */
     getList() {
       this.loading = true;
-      listOssConfig(this.queryParams).then((response) => {
-        this.ossConfigList = response.rows;
-        this.total = response.total;
+      listOssConfig(this.queryParams).then((r) => {
+        this.ossConfigList = r.rows;
+        this.total = r.total;
         this.loading = false;
       });
     },
@@ -325,9 +325,9 @@ export default {
       this.loading = true;
       this.reset();
       const ossConfigId = row.ossConfigId || this.ids;
-      getOssConfig(ossConfigId).then((response) => {
+      getOssConfig(ossConfigId).then((r) => {
         this.loading = false;
-        this.form = response.data;
+        this.form = r.data;
         this.open = true;
         this.title = "修改对象存储配置";
       });
@@ -338,7 +338,7 @@ export default {
         if (valid) {
           this.buttonLoading = true;
           if (this.form.ossConfigId != null) {
-            updateOssConfig(this.form).then(response => {
+            updateOssConfig(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
@@ -346,7 +346,7 @@ export default {
               this.buttonLoading = false;
             });
           } else {
-            addOssConfig(this.form).then(response => {
+            addOssConfig(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();

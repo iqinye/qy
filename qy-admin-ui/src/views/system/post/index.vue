@@ -213,9 +213,9 @@ export default {
     /** 查询岗位列表 */
     getList() {
       this.loading = true;
-      listPost(this.queryParams).then(response => {
-        this.postList = response.rows;
-        this.total = response.total;
+      listPost(this.queryParams).then(r => {
+        this.postList = r.rows;
+        this.total = r.total;
         this.loading = false;
       });
     },
@@ -262,8 +262,8 @@ export default {
     handleUpdate(row) {
       this.reset();
       const postId = row.postId || this.ids
-      getPost(postId).then(response => {
-        this.form = response.data;
+      getPost(postId).then(r => {
+        this.form = r.data;
         this.open = true;
         this.title = "修改岗位";
       });
@@ -273,13 +273,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.postId != undefined) {
-            updatePost(this.form).then(response => {
+            updatePost(this.form).then(r => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addPost(this.form).then(response => {
+            addPost(this.form).then(r => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
